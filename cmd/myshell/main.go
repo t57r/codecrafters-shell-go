@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -20,6 +21,13 @@ func main() {
 			os.Exit(1)
 		}
 		cmd = strings.TrimSuffix(cmd, "\n")
+
+		tokens := strings.Fields(cmd)
+		if len(tokens) == 2 && tokens[0] == "exit" {
+			if exitCode, err := strconv.Atoi(tokens[1]); err == nil {
+				os.Exit(exitCode)
+			}
+		}
 
 		// handle command
 		fmt.Printf("%s: command not found\n", cmd)
