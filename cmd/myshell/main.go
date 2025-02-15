@@ -4,12 +4,18 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 )
 
 // Ensures gofmt doesn't remove the "fmt" import in stage 1 (feel free to remove this!)
 var _ = fmt.Fprint
+
+func IsShellBuiltin(s string) bool {
+	builtins := []string{"echo", "exit", "type"}
+	return slices.Contains(builtins, s)
+}
 
 func main() {
 	for true {
@@ -31,6 +37,15 @@ func main() {
 
 		if len(tokens) > 2 && tokens[0] == "echo" {
 			fmt.Println(strings.Join(tokens[1:], " "))
+			continue
+		}
+
+		if len(tokens) == 2 && tokens[0] == "type" {
+			if IsShellBuiltin(tokens[1]) {
+				fmt.Printf("%s is a shell builtin\n", tokens[1])
+			} else {
+				fmt.Printf("%s: not found\n", tokens[1])
+			}
 			continue
 		}
 
