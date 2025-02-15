@@ -29,7 +29,12 @@ func main() {
 			}
 		}
 
-		// handle command
+		if len(tokens) > 2 && tokens[0] == "echo" {
+			fmt.Println(strings.Join(tokens[1:], " "))
+			continue
+		}
+
+		// at this point command is not verified
 		fmt.Printf("%s: command not found\n", cmd)
 	}
 }
