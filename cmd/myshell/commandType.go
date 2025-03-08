@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
-	"strings"
 )
 
 func commandType(args []string) error {
@@ -18,15 +15,10 @@ func commandType(args []string) error {
 		return nil
 	}
 
-	envPath := os.Getenv("PATH")
-	pathDirs := strings.Split(envPath, ":")
-	for _, dir := range pathDirs {
-		commandPath := filepath.Join(dir, commandName)
-		_, err := os.Stat(commandPath)
-		if err == nil {
-			fmt.Printf("%s is %s\n", commandName, commandPath)
-			return nil
-		}
+	_, commandPath, err := FindFileInfo(commandName)
+	if err == nil {
+		fmt.Printf("%s is %s\n", commandName, commandPath)
+		return nil
 	}
 
 	fmt.Printf("%s: not found\n", args[0])
