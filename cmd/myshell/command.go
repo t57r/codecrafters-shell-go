@@ -11,6 +11,10 @@ func getCommands() map[string]Command {
 			name:     "exit",
 			callback: commandExit,
 		},
+		"pwd": {
+			name:     "pwd",
+			callback: commandPrintWorkingDirectory,
+		},
 		"type": {
 			name:     "type",
 			callback: commandType,
